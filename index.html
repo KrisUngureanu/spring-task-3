@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Конвертер валют</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .converter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .converter input,
+        .converter select,
+        .converter .output {
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .output {
+            background-color: #f0f0f0;
+            width: 100px;
+            text-align: center;
+        }
+        
+    </style>
+    <script>
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const currency = document.getElementById('currency').value;
+
+            let kztResult = 0;
+            let usdResult = 0;
+            let eurResult = 0;
+
+            if (currency === 'KZT') {
+                usdResult = (amount / 431).toFixed(2); 
+                eurResult = (amount / 509).toFixed(2); 
+            } else if (currency === 'USD') {
+                kztResult = (amount * 429).toFixed(2);
+                eurResult = ((amount * 429) / 509).toFixed(2); 
+            } else if (currency === 'EUR') {
+                kztResult = (amount * 507).toFixed(2); 
+                usdResult = ((amount * 507) / 431).toFixed(2); 
+            }
+
+            document.getElementById('kzt-output').textContent = kztResult || '-';
+            document.getElementById('usd-output').textContent = usdResult || '-';
+            document.getElementById('eur-output').textContent = eurResult || '-';
+        }
+    </script>
+</head>
+
+<body>
+
+
+    <div class="converter">
+        <table>
+            <tr>
+                <td><label for="amount">Введите сумму:</label></td>
+                <td>
+                    <p style="text-align: center;"><b>KZT (tenge)</b></p>
+                </td>
+                <td>
+                    <p style="text-align: center;"><b>USD (dollar)</b></p>
+                </td>
+                <td>
+                    <p style="text-align: center;"><b>EUR (euro)</b></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="number" id="amount" value="50000" onchange="convertCurrency()"
+                        oninput="convertCurrency()">
+
+                    <select id="currency" onchange="convertCurrency()">
+                        <option value="KZT">KZT</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="output" id="kzt-output">-</div>
+                </td>
+                <td>
+                    <div class="output" id="usd-output">-</div>
+                </td>
+                <td>
+                    <div class="output" id="eur-output">-</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        convertCurrency();
+    </script>
+
+</body>
+
+</html>
